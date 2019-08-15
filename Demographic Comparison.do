@@ -1,5 +1,5 @@
         clear
-        import excel "C:\Users\Sam\Desktop\While Out\Enrollment Public Schools 2017-18.xlsx", sheet("LEA and School") cellrange(A5:AB3268) firstrow case(lower)
+        import excel "C:\Users\Sam\Documents\GitHub\Public_data\Enrollment Public Schools 2017-18 without Race.xlsx", sheet("LEA and School") cellrange(A5:AB3268) firstrow case(lower)
         keep leatype schoolnumber total
         rename schoolnumber schl
         drop if mi(schl)
@@ -11,7 +11,7 @@
 
         import excel "C:\Users\Sam\Desktop\While Out\SchoolFastFacts.xlsx", sheet("Sheet2") firstrow case(lower)
         replace dataelement =trim(dataelement)
-        keep if inlist( dataelement,  "Black/African American", "Hispanic", "Economically Disadvantaged",  "Percent of Gifted Students", "School Enrollment", "Intermediate Unit Name" )
+        keep if inlist( dataelement,  "Black/African American", "Hispanic", "Economically Disadvantaged", "School Enrollment", "Intermediate Unit Name" )
         replace dataelement ="black" if dataelement=="Black/African American"
         replace dataelement ="econ" if dataelement=="Economically Disadvantaged"
         replace dataelement ="hispanic" if dataelement=="Hispanic"
@@ -21,13 +21,11 @@
         format displayvalue %20s
         rename displayvalue d_
         reshape wide d_ , i( districtname name aun schl) j( dataelement )s
-        rename d_2_or_more race_2_or_more
         rename d_* *
         destring schl, force replace
         gen str4 z = string(schl,"%04.0f")
         drop schl*
         rename z schl
-        drop keep
         order districtname name aun schl black hispanic econ
         tempfile demo
         save `demo'
@@ -44,7 +42,7 @@
         use `base'
         gen charter=1 if leatype =="CS"
         egen has_charters=sum(charter), by(iu)
-        destring black hispanic econ, force replace
+        destring black hispanic econ enrollment, force replace
         gen black_count= black *enrollment /100
         gen hispanic_count= hispanic*enrollment /100
         gen econ_count= econ *enrollment /100
