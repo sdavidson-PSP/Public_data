@@ -11,20 +11,10 @@
 
         import excel "C:\Users\Sam\Desktop\While Out\SchoolFastFacts.xlsx", sheet("Sheet2") firstrow case(lower)
         replace dataelement =trim(dataelement)
-        gen keep=1 if inlist( dataelement, "White", "2 or More Races", "American Indian/Alaskan Native", "Asian" ,"Special Education")
-        replace keep=1 if inlist( dataelement,  "Black/African American", "Native Hawaiian or other Pacific Islander", "Hispanic", "Economically Disadvantaged", "English Learner", "Percent of Gifted Students", "School Enrollment", "Intermediate Unit Name" )
-        keep if keep==1
-        replace dataelement ="2_or_more" if dataelement=="2 or More Races"
-        replace dataelement ="native" if dataelement=="American Indian/Alaskan Native"
-        replace dataelement ="asian" if dataelement=="Asian"
+        keep if inlist( dataelement,  "Black/African American", "Hispanic", "Economically Disadvantaged",  "Percent of Gifted Students", "School Enrollment", "Intermediate Unit Name" )
         replace dataelement ="black" if dataelement=="Black/African American"
         replace dataelement ="econ" if dataelement=="Economically Disadvantaged"
         replace dataelement ="hispanic" if dataelement=="Hispanic"
-        replace dataelement ="islander" if dataelement=="Native Hawaiian or other Pacific Islander"
-        replace dataelement ="white" if dataelement=="White"
-        replace dataelement ="ell" if dataelement=="English Learner"
-        replace dataelement ="gifted" if dataelement=="Percent of Gifted Students"
-        replace dataelement ="sped" if dataelement=="Special Education"
         replace dataelement ="enrollment" if dataelement=="School Enrollment"
         replace dataelement ="county" if dataelement=="School Address (City)"
         replace dataelement ="iu" if dataelement=="Intermediate Unit Name"
