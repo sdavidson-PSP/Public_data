@@ -1,5 +1,8 @@
+*Set Working Directory (THIS WILL NEED TO CHANGE TO THE FOLDER ALL THE PULLED DATA IS IN)
+    cd C:\Users\Sam\Documents\GitHub\Public_data\        
+        
         clear
-        import excel "C:\Users\Sam\Documents\GitHub\Public_data\Enrollment Public Schools 2017-18 without Race.xlsx", sheet("LEA and School") cellrange(A5:AB3268) firstrow case(lower)
+        import excel "Enrollment Public Schools 2017-18 without Race.xlsx", sheet("LEA and School") cellrange(A5:AB3268) firstrow case(lower)   
         keep leatype schoolnumber total
         rename schoolnumber schl
         drop if mi(schl)
@@ -8,8 +11,7 @@
         save `enrollment' 
     clear
 
-
-        import excel "C:\Users\Sam\Desktop\While Out\SchoolFastFacts.xlsx", sheet("Sheet2") firstrow case(lower)
+        import excel "SchoolFastFacts_20172018.xlsx", sheet("Sheet1") firstrow case(lower)
         replace dataelement =trim(dataelement)
         keep if inlist( dataelement,  "Black/African American", "Hispanic", "Economically Disadvantaged", "School Enrollment", "Intermediate Unit Name" )
         replace dataelement ="black" if dataelement=="Black/African American"
