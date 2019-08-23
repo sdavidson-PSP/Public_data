@@ -93,5 +93,8 @@
         tabstat enrollment  , by(leatype) stat(sum)
     *table 14
         collapse (mean) black hispanic econ [fweight=enrollment]    
-    restore 
+    restore
+preserve
+collapse (sum) black_count enrollment hispanic_count econ_count  , by(leatype)
+restore
         
